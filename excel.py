@@ -1,3 +1,4 @@
+# coding=utf8
 from openpyxl import load_workbook
 from pprint import pprint
 
@@ -23,10 +24,14 @@ def get_Excel_as_dict(file, sheet, getDictBy=None, fields=[]):
             first = False
         else:
             if row[header[ chave ]].value != '':
+                if row[header[ chave ]].value not in arr:
+                    arr[row[header[ chave ]].value] = []
+                tmp = {}
                 for i in fields:
-                    if row[header[ chave ]].value not in arr:
-                        arr[row[header[ chave ]].value] = {}
-                    arr[row[header[ chave ]].value][i] = row[header[ i ]].value
+                    tmp[i] = row[header[ i ]].value
+                arr[row[header[ chave ]].value].append(tmp)
+
     return arr
 
-pprint(get_Excel_as_dict('example.xlsx', 'sheet1', getDictBy='MyKeyField', fields=['Field1', u'Field2' ]))
+
+data = get_Excel_as_dict('Tabelas.xlsx', 'Tabelas', getDictBy='Grupo', fields=['Desc completa', u'Tabela' ])
