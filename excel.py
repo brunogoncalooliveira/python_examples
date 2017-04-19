@@ -1,10 +1,10 @@
 from openpyxl import load_workbook
 from pprint import pprint
 
-def get_Excel_as_dict(file, getDictBy=None, fields=[]):
+def get_Excel_as_dict(file, sheet, getDictBy=None, fields=[]):
 
     wb2 = load_workbook(file)
-    sheet = wb2['Sheet1']
+    sheet = wb2[sheet]
 
     first = True
 
@@ -29,4 +29,4 @@ def get_Excel_as_dict(file, getDictBy=None, fields=[]):
                     arr[row[header[ chave ]].value][i] = row[header[ i ]].value
     return arr
 
-pprint(get_Excel_as_dict('example.xlsx', getDictBy='MyKeyField', fields=['Field1', u'Field2' ]))
+pprint(get_Excel_as_dict('example.xlsx', 'sheet1', getDictBy='MyKeyField', fields=['Field1', u'Field2' ]))
